@@ -43,6 +43,7 @@ export default {
     // https://go.nuxtjs.dev/emotion
     '@nuxtjs/emotion',
   ],
+  
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {

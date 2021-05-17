@@ -1,89 +1,113 @@
 <template>
-  <div class="container">
+  <div class="container" align="center">
     <CBox
       v-bind="mainStyles[colorMode]"
-      d="flex"
+      
       w="100vw"
       h="100vh"
-      flex-dir="column"
       justify-content="center"
     >
-      <CHeading text-align="center" mb="4">
-        ⚡️ Hello chakra-ui/vue
-      </CHeading>
-      <CFlex justify="center" direction="column" align="center">
-        <CBox mb="3">
-          <CIconButton
-            mr="3"
-            :icon="colorMode === 'light' ? 'moon' : 'sun'"
-            :aria-label="`Switch to ${
-              colorMode === 'light' ? 'dark' : 'light'
-            } mode`"
-            @click="toggleColorMode"
-          />
-          <CButton
-            left-icon="info"
-            variant-color="blue"
-            @click="showToast"
-          >
-            Show Toast
-          </CButton>
-        </CBox>
-        <CAvatarGroup>
-          <CAvatar
-            name="Evan You"
-            alt="Evan You"
-            src="https://pbs.twimg.com/profile_images/1206997998900850688/cTXTQiHm_400x400.jpg"
-          >
-            <CAvatarBadge size="1.0em" bg="green.500" />
-          </CAvatar>
-          <CAvatar
-            name="Jonathan Bakebwa"
-            alt="Jonathan Bakebwa"
-            src="https://res.cloudinary.com/xtellar/image/upload/v1572857445/me_zqos4e.jpg"
-          >
-            <CAvatarBadge size="1.0em" bg="green.500" />
-          </CAvatar>
-          <CAvatar
-            name="Segun Adebayo"
-            alt="Segun Adebayo"
-            src="https://pbs.twimg.com/profile_images/1169353373012897802/skPUWd6e_400x400.jpg"
-          >
-            <CAvatarBadge size="1.0em" bg="green.500" />
-          </CAvatar>
-          <CAvatar src="pop">
-            <CAvatarBadge size="1.0em" border-color="papayawhip" bg="tomato" />
-          </CAvatar>
-        </CAvatarGroup>
-        <CButton
-          left-icon="close"
-          variant-color="red"
-          mt="3"
-          @click="showModal = true"
-        >
-          Delete Account
-        </CButton>
-        <CModal :is-open="showModal">
-          <CModalOverlay />
-          <CModalContent>
-            <CModalHeader>Are you sure?</CModalHeader>
-            <CModalBody>Deleting user cannot be undone</CModalBody>
-            <CModalFooter>
-              <CButton @click="showModal = false">
-                Cancel
-              </CButton>
-              <CButton
-                margin-left="3"
-                variant-color="red"
-                @click="showModal = false"
-              >
-                Delete User
-              </CButton>
-            </CModalFooter>
-            <CModalCloseButton @click="showModal = false" />
-          </CModalContent>
-        </CModal>
-      </CFlex>
+      <CBox justify-content="right" mt="30px" >
+        <CIconButton 
+          :icon="colorMode === 'light' ? 'moon' : 'sun'"
+          :aria-label="`Switch to ${
+            colorMode === 'light' ? 'dark' : 'light'
+          } mode`"
+          @click="toggleColorMode"
+        /> Dark Mode
+      </CBox>
+      <CBox
+        justify-content="center"
+        w="40%"
+        h="70%"
+        justify="center"
+        mt="10px"
+        border="2px"
+        borderRadius="lg"
+        borderColor="gray.400"
+        pb="20px"
+      >
+        <CHeading text-align="center" mb="4"> Calculator </CHeading>
+        <c-text></c-text>
+        <c-grid w="80%" color>
+          <c-stack spacing="3" is-inline>
+            <c-input
+              size="md"
+              focus-border-color="pink.400"
+              type="number"
+              v-model="angka1"
+            />
+            <c-checkbox size="lg" @change="cbAngka1 = !cbAngka1"
+            variant-color="red"></c-checkbox>
+          </c-stack>
+          <br />
+          <c-stack spacing="3" is-inline>
+            <c-input
+              size="md"
+              focus-border-color="pink.400"
+              type="number"
+              v-model="angka2"
+            />
+            <c-checkbox size="lg" @change="cbAngka2 = !cbAngka2"
+            variant-color="red"></c-checkbox>
+          </c-stack>
+          <br />
+          <c-stack spacing="3" is-inline>
+            <c-input
+              size="md"
+              focus-border-color="pink.400"
+              type="number"
+              v-model="angka3"
+            />
+            <c-checkbox size="lg" @change="cbAngka3 = !cbAngka3"
+            variant-color="red"></c-checkbox>
+          </c-stack>
+          <br />
+          <c-stack spacing="5" is-inline>
+            <c-icon-button
+              variant="outline"
+              variant-color="red"
+              aria-label="Drink coffee"
+              icon="add"
+              @click="operate('addition')"
+            />
+            <c-icon-button
+              variant="outline"
+              variant-color="vue"
+              aria-label="Send email"
+              icon="minus"
+              @click="operate('substraction')"
+            />
+            <c-icon-button
+              variant="outline"
+              variant-color="red"
+             
+              icon="close"
+              @click="operate('multiply')"
+            />
+            <c-icon-button
+              variant="outline"
+              variant-color="vue"
+              aria-label="Send email"
+              icon="divide"
+              @click="operate('division')"
+            ></c-icon-button>
+          </c-stack>
+          <br />
+          <c-divider />
+          <br />
+          <c-stack spacing="5" is-inline>
+            <c-text fontSize="2xl" align="left">Hasil: </c-text>
+            <c-input
+              size="md"
+              focus-border-color="pink.400"
+              type="number"
+              v-model="hasil"
+              isReadOnly
+            />
+          </c-stack>
+        </c-grid>
+      </CBox>
     </CBox>
   </div>
 </template>
@@ -92,19 +116,11 @@
 import {
   CBox,
   CButton,
-  CAvatarGroup,
-  CAvatar,
-  CAvatarBadge,
-  CModal,
-  CModalContent,
-  CModalOverlay,
-  CModalHeader,
-  CModalFooter,
-  CModalBody,
-  CModalCloseButton,
+  CGrid,
   CIconButton,
   CFlex,
-  CHeading
+  CHeading,CDivider,
+  CText,
 } from '@chakra-ui/vue'
 
 export default {
@@ -112,24 +128,18 @@ export default {
   components: {
     CBox,
     CButton,
-    CAvatarGroup,
-    CAvatar,
-    CAvatarBadge,
-    CModal,
-    CModalContent,
-    CModalOverlay,
-    CModalHeader,
-    CModalFooter,
-    CModalBody,
-    CModalCloseButton,
+    CGrid,
+    
     CIconButton,
     CFlex,
-    CHeading
+    CHeading, CDivider,
+    CText
   },
   inject: ['$chakraColorMode', '$toggleColorMode'],
   data () {
     return {
       showModal: false,
+      
       mainStyles: {
         dark: {
           bg: 'gray.700',
@@ -139,7 +149,15 @@ export default {
           bg: 'white',
           color: 'gray.900'
         }
-      }
+      },
+      angka1:0,
+      angka2:0,
+      angka3:0,
+      hasil:0,
+      cbAngka1:false,
+      cbAngka2:false,      
+      cbAngka3:false,
+      errorMessage:"Infinite Result..!!! Divide By Zero, Please Check Your Input",
     }
   },
   computed: {
@@ -154,15 +172,92 @@ export default {
     }
   },
   methods: {
-    showToast () {
+    showInfinity () {
       this.$toast({
-        title: 'Account created.',
-        description: "We've created your account for you.",
-        status: 'success',
-        duration: 10000,
-        isClosable: true
+        title: 'Something Wrong',
+        description: this.errorMessage,
+        status: 'warning',
+        duration: 2000,
+        isClosable: true,
+        variant:'subtle'
       })
-    }
+    },
+  
+    operate(operator){
+      
+      if(this.cbAngka1==true && this.cbAngka2==true && this.cbAngka3==true ){
+        if(operator=="addition"){
+          this.hasil = +this.angka1 + +this.angka2 + +this.angka3;
+
+        }else if(operator=="substraction"){
+          
+          this.hasil =+this.angka1 - +this.angka2 - +this.angka3;
+
+        }else if(operator=="division"){
+           if (this.angka1==0 || this.angka2==0 || this.angka3==0 ){
+             this.showInfinity();
+           }else{
+            this.hasil =+this.angka1 / +this.angka2 / +this.angka3;
+           }
+        }else {
+          this.hasil = +this.angka1 * +this.angka2 * +this.angka3;
+
+        }
+      }else  if(this.cbAngka1==true && this.cbAngka2==true){
+         if(operator=="addition"){
+          this.hasil = +this.angka1 + +this.angka2 ;
+
+        }else if(operator=="substraction"){
+          this.hasil = +this.angka1 - +this.angka2;
+
+        }else if(operator=="division"){
+          if (this.angka1==0 || this.angka2==0){
+             this.showInfinity();
+          }else{
+          this.hasil = +this.angka1 / +this.angka2 ;
+          }
+        }else {
+          this.hasil = +this.angka1 * +this.angka2;
+
+        }
+
+      }else  if(this.cbAngka1==true && this.cbAngka3==true){
+        if(operator=="addition"){
+          this.hasil = +this.angka1 + +this.angka3 ;
+
+        }else if(operator=="substraction"){
+          this.hasil = +this.angka1 - +this.angka3;
+
+        }else if(operator=="division"){
+           if (this.angka1==0 || this.angka3==0){
+             this.showInfinity();
+          }else{
+          this.hasil = +this.angka1 / +this.angka3 ;
+          }
+        }else {
+          this.hasil = +this.angka1 * +this.angka3;
+
+        }
+      }else  if(this.cbAngka2==true && this.cbAngka3==true){
+        if(operator=="addition"){
+          this.hasil = +this.angka2 + +this.angka3 ;
+
+        }else if(operator=="substraction"){
+          this.hasil = +this.angka2 - +this.angka3;
+
+        }else if(operator=="division"){
+           if (this.angka2==0 || this.angka3==0){
+             this.showInfinity();
+          }else{
+          this.hasil = +this.angka2 / +this.angka3 ;
+          }
+        }else {
+          this.hasil = +this.angka2 * +this.angka3;
+
+        }
+      }
+    },
+    
   }
 }
 </script>
