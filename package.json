@@ -9,7 +9,7 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
-    "@chakra-ui/nuxt": "^0.3.0",
+    "@chakra-ui/nuxt": "^0.6.0",
     "@fortawesome/fontawesome-free": "^5.15.3",
     "@fortawesome/free-brands-svg-icons": "^5.15.3",
     "@nuxtjs/emotion": "^0.1.0",
